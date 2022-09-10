@@ -1,8 +1,8 @@
 FROM utarn/aspnetcore3.1-centos8:latest AS builder 
 WORKDIR /src
 COPY aspnetproject/aspnetproject.csproj aspnetproject/
-RUN dotnet restore aspnetproject/
-COPY . .
+RUN dotnet restore
+COPY *.csproj ./
 WORKDIR /src/aspnetproject
 RUN dotnet publish --output /app --configuration Release
 
