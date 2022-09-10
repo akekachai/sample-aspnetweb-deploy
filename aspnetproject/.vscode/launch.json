@@ -9,9 +9,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/aspnetproject/bin/Debug/netcoreapp3.1/aspnetproject.dll",
+            "program": "${workspaceFolder}/bin/Debug/netcoreapp3.1/aspnetproject.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/aspnetproject",
+            "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",
