@@ -1,12 +1,16 @@
-FROM utarn/aspnetcore3.1-centos8:latest AS builder 
-WORKDIR /src
-COPY aspnetproject/aspnetproject.csproj aspnetproject/
-RUN dotnet restore
-COPY *.csproj ./
-WORKDIR /src/aspnetproject
-RUN dotnet publish --output /app --configuration Release
-
-FROM utarn/aspnetcore3.1-centos8:latest
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
 WORKDIR /app
-COPY --from=builder /app .
+    
+# Copy csproj and restore as distinct layers
+COPY *.csproj ./
+RUN dotnet restore
+    
+# Copy everything else and build
+COPY ../engine/examples ./
+RUN dotnet publish -c Release -o out
+    
+# Build runtime image
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+WORKDIR /app
+COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "aspnetproject.dll"]
